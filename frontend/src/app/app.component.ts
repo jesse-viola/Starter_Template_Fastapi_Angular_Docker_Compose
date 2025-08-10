@@ -1,21 +1,17 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,RouterLink, RouterLinkActive],
   template: `
-    <header class="container">
-      <h1>Mini Shop Test</h1>
-      <nav>
-        <a routerLink="/">Items</a>
-      </nav>
-    </header>
-    <main class="container">
-      <router-outlet />
-    </main>
-  `,
+  <nav>
+    <a routerLink="" routerLinkActive="active">Home</a>
+    <a routerLink="favorites" routerLinkActive="active">Favorites</a>
+  </nav>
+  <router-outlet></router-outlet>
+`,
   styles: [`
     .container { padding: 16px; }
     nav a { margin-right: 12px; }
