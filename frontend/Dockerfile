@@ -1,7 +1,7 @@
 # frontend/Dockerfile
 
-# Stage 1: Build Angular App
-FROM node:20 AS build
+# Development Dockerfile for hot reloading
+FROM node:20
 
 # Set working directory
 WORKDIR /app
@@ -12,20 +12,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the application code
+# Copy the application code (this will be overridden by volume mount)
 COPY . .
 
-# Build the Angular application
-RUN npm run build --output-path=dist
+# Expose the Angular dev server port
+EXPOSE 4200
 
-# Stage 2: Serve the Angular App with Nginx
-FROM nginx:alpine
-
-# Copy built Angular app from previous stage
-COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
-
-# Expose the default Nginx HTTP port
-EXPOSE 80
-
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+# Start the Angular development server with hot reloading
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--port", "4200", "--poll", "2000"]

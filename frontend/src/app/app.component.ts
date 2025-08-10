@@ -1,45 +1,25 @@
-import { Component } from '@angular/core';
-import { DataService } from './data.service';
-import { HttpParams } from '@angular/common/http';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
   template: `
-    <div class="app-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Enter Value</mat-label>
-        <input matInput [(ngModel)]="inputValue">
-      </mat-form-field>
-      <button mat-raised-button (click)="onSubmit()">Get Items</button>
-      <div *ngIf="items">
-        <h2>Items:</h2>
-        <ul>
-          <li *ngFor="let item of items">{{ item }}</li>
-        </ul>
-      </div>
-    </div>
+    <header class="container">
+      <h1>Mini Shop Test</h1>
+      <nav>
+        <a routerLink="/">Items</a>
+      </nav>
+    </header>
+    <main class="container">
+      <router-outlet />
+    </main>
   `,
   styles: [`
-    .app-container {
-      text-align: center;
-      margin-top: 50px;
-    }
-    mat-form-field {
-      margin-bottom: 20px;
-    }
-  `]
+    .container { padding: 16px; }
+    nav a { margin-right: 12px; }
+  `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  inputValue: string = '';
-  items: any[] = [];
-
-  constructor(private dataService: DataService) { }
-
-  onSubmit() {
-    let params = new HttpParams().set("param_type", this.inputValue);
-    this.dataService.getItems(params).subscribe((data: any[]) => {
-      console.log('Received items:', data); // Added for debugging purposes
-      this.items = data;
-    });
-  }
-}
+export class AppComponent { }
