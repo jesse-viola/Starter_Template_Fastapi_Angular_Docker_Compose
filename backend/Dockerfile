@@ -1,17 +1,26 @@
-FROM python:3.11-slim
+FROM maven:3-eclipse-temurin-21-alpine AS deps
 
-# Set working directory
 WORKDIR /app
+COPY pom.xml /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN mvn -q -DskipTests dependency:go-offline
 
-# Copy the application code
-COPY . .
+FROM maven:3-eclipse-temurin-21-alpine AS build
 
-# Expose the FastAPI port
-EXPOSE 8000
+WORKDIR /app
+COPY --from=deps /root/.m2/repository /root/.m2/repository
+COPY . /app
 
-# Start the FastAPI app
-CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+RUN mvn package -DskipTests -o
+
+
+FROM maven:3-eclipse-temurin-21-alpine AS dev
+
+WORKDIR /app
+COPY --from=deps /root/.m2/repository /root/.m2/repository
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN apk add inotify-tools
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

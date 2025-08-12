@@ -5,10 +5,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      target: dev
     ports:
-      - "8000:8000"
+      - "8080:8080"
     volumes:
-      - ./backend:/app
+      - ./backend:/app:cached    # bind mount source
+      - maven-cache:/root/.m2    # cache Maven repo
 
   frontend:
     build:
@@ -19,3 +21,6 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+
+volumes:
+  maven-cache:

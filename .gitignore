@@ -20,3 +20,40 @@ venv/
 backend/env/
 **/__pycache__/
 backend/**/*.db
+
+# Backend (Java / Maven / Spring Boot 21)
+########################################
+# Maven target build output
+backend/target/
+
+# Compiled class files
+backend/**/*.class
+
+# Logs
+backend/**/*.log
+
+# Spring Boot devtools restart trigger file
+backend/.reloadtrigger
+backend/**/.reloadtrigger
+/app/.reloadtrigger
+
+# Environment variable files
+backend/*.env
+backend/*.env.*
+
+# IDE specific Java project files (backend)
+backend/**/*.iml
+backend/**/*.ipr
+backend/**/*.iws
+
+# Maven / Gradle wrapper & cache (optional — remove if you keep them in repo)
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.gradle/
+backend/build/
+
+# Temporary JVM crash logs
+backend/hs_err_pid*
+backend/replay_pid*
+
+backend/mvnw
+backend/mvnw.cmd
