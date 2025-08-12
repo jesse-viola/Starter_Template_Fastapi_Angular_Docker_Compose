@@ -1,6 +1,6 @@
 # Starter_Template_Fastapi_Angular_Docker_Compose
 
-This project is a template for a full-stack application using Python (FastAPI) for the backend and Angular for the frontend. It is containerized using Docker and Docker Compose for easy deployment and management.
+This project is a template for a full-stack application using Java 21 Spring Boot for the backend and Angular for the frontend. It is containerized using Docker and Docker Compose for easy deployment and management.
 
 ## Prerequisites
 
@@ -24,4 +24,5 @@ or if you are using an older version of Docker Compose:
 
 The Angular frontend will be accessible at: http://localhost:4200
 
-You can access the FastAPI backend at: http://localhost:8000
+
+You can access the backend at: http://localhost:8000
