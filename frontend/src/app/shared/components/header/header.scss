@@ -1,0 +1,192 @@
+// Main container
+.header-container {
+    width: 100%;
+    height: 64px;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+// Content grid with flexible units
+.header-content {
+    display: grid;
+    grid-template-columns: auto minmax(auto, 3fr) minmax(auto, 1fr);
+    column-gap: clamp(16px, 3vw, 32px);
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 clamp(16px, 4vw, 48px);
+}
+
+// Logo section
+.logo-container {
+    display: flex;
+    align-items: center;
+
+    .logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+        font-size: clamp(16px, 1.5vw, 20px);
+
+        mat-icon {
+            margin-right: 8px;
+            font-size: 24px;
+            height: 24px;
+            width: 24px;
+        }
+    }
+}
+
+// Navigation links
+.nav-links {
+    display: flex;
+    height: 100%;
+    gap: clamp(4px, 1vw, 12px);
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 clamp(8px, 1.5vw, 20px);
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #6200ee;
+
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: #6200ee;
+            }
+        }
+    }
+}
+
+// Right side actions
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 24px);
+    justify-self: end;
+}
+
+// Search container
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 8px 16px;
+    width: clamp(180px, 15vw, 320px);
+    cursor: pointer;
+
+    mat-icon {
+        color: #757575;
+        margin-right: 8px;
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+    }
+
+    .search-text {
+        color: #757575;
+        font-size: 14px;
+    }
+}
+
+// Action icons
+.action-icon {
+    color: #757575;
+
+    &:hover {
+        color: #6200ee;
+    }
+
+    mat-icon {
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+    }
+}
+
+// Avatar
+.avatar-container {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    .avatar-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+// Tablet breakpoint
+@media (max-width: 768px) {
+    .header-content {
+        grid-template-columns: auto 1fr auto;
+        column-gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 16px;
+    }
+
+    .logo-container {
+        flex: 0 0 auto; // Don't grow or shrink
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .search-container {
+        flex: 0 1 auto; // Can shrink but not grow
+        margin: 0 16px; // Equal margin on both sides
+        max-width: 240px;
+    }
+
+    .actions-container {
+        flex: 0 0 auto; // Don't grow or shrink
+        display: flex;
+        gap: 12px;
+    }
+
+    .search-container .search-text {
+        display: none;
+    }
+}
+
+// Very small screens
+@media (max-width: 400px) {
+    .header-content {
+        column-gap: 8px; // Even tighter spacing
+        padding: 0 12px; // Smaller padding
+    }
+
+    .search-container {
+        width: auto;
+        padding: 8px;
+        aspect-ratio: 1/1;
+    }
+}

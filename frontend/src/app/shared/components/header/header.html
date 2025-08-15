@@ -1,0 +1,44 @@
+<!-- header.component.html -->
+<div class="header-container">
+    <div class="header-content">
+        <!-- Logo -->
+        <div class="logo-container">
+            <a routerLink="/" class="logo">
+                <mat-icon>track_changes</mat-icon>
+                <span>KnitCraft</span>
+            </a>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a routerLink="/patterns" class="nav-link">Patterns</a>
+            <a routerLink="/yarns" class="nav-link">Yarns</a>
+            <a routerLink="/needles" class="nav-link">Needles</a>
+            <a routerLink="/projects" class="nav-link">Projects</a>
+            <a routerLink="/learn" class="nav-link">Learn</a>
+        </nav>
+
+        <!-- Right side actions -->
+        <div class="actions-container">
+            <!-- Search -->
+            <div class="search-container">
+                <mat-icon>search</mat-icon>
+                <span class="search-text">Search</span>
+            </div>
+
+            <!-- Icons -->
+            <button mat-icon-button class="action-icon">
+                <mat-icon>favorite_border</mat-icon>
+            </button>
+
+            <button mat-icon-button class="action-icon">
+                <mat-icon>mail_outline</mat-icon>
+            </button>
+
+            <!-- Avatar -->
+            <div class="avatar-container">
+                <img src="assets/avatar.png" alt="Profile" class="avatar-image">
+            </div>
+        </div>
+    </div>
+</div>

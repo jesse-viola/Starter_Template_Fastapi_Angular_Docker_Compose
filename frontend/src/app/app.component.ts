@@ -1,20 +1,19 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive} from '@angular/router';
+import { RouterOutlet } from '@angular/router';
+import { Header } from './shared/components/header/header';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, Header],
   template: `
-  <nav>
-    <a routerLink="" routerLinkActive="active">Home</a>
-    <a routerLink="favorites" routerLinkActive="active">Favorites</a>
-  </nav>
-  <router-outlet></router-outlet>
-`,
+    <app-header></app-header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  `,
   styles: [`
-    .container { padding: 16px; }
-    nav a { margin-right: 12px; }
+    main { padding: 16px; }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

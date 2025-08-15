@@ -1,0 +1,9 @@
+<div class="featured-yarns-container">
+  <h2 class="section-title">Featured Yarns</h2>
+  <div class="yarns-grid">
+    @for (yarn of featuredYarns; track yarn.title) {
+    <app-yarn-card [title]="yarn.title" [description]="yarn.description" [imageUrl]="yarn.imageUrl">
+    </app-yarn-card>
+    }
+  </div>
+</div>
