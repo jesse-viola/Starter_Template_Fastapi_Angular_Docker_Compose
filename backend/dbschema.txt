@@ -1,0 +1,151 @@
+// Knitting Application Database Schema
+// Use this at https://dbdiagram.io/
+
+Table users {
+  id integer [primary key, increment]
+  username varchar(50) [unique, not null]
+  email varchar(255) [unique, not null]
+  password_hash varchar(255) [not null]
+  first_name varchar(100)
+  last_name varchar(100)
+  profile_image_url text
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table yarns {
+  id integer [primary key, increment]
+  name varchar(255) [not null]
+  brand varchar(255)
+  weight varchar(50) // e.g., "DK", "Worsted", "Fingering"
+  fiber_content text
+  yardage integer
+  weight_grams integer
+  color_name varchar(100)
+  color_hex varchar(7) // hex color code
+  image_url text
+  description text
+  price decimal(10,2)
+  discontinued boolean [default: false]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table patterns {
+  id integer [primary key, increment]
+  name varchar(255) [not null]
+  designer varchar(255)
+  difficulty_level varchar(50) // e.g., "Beginner", "Intermediate", "Advanced"
+  pattern_type varchar(100) // e.g., "Sweater", "Hat", "Scarf", "Blanket"
+  description text
+  instructions text
+  gauge_stitches integer
+  gauge_rows integer
+  gauge_inches integer [default: 4]
+  estimated_yardage integer
+  hook_needle_size varchar(50)
+  image_url text
+  pdf_url text
+  source_url text
+  is_free boolean [default: true]
+  price decimal(10,2)
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table tags {
+  id integer [primary key, increment]
+  name varchar(100) [unique, not null]
+  category varchar(50) // e.g., "color", "texture", "season", "skill"
+  created_at timestamp [default: `now()`]
+}
+
+// Junction table for yarn tags (many-to-many)
+Table yarn_tags {
+  yarn_id integer [ref: > yarns.id]
+  tag_id integer [ref: > tags.id]
+  
+  indexes {
+    (yarn_id, tag_id) [pk]
+  }
+}
+
+// Junction table for pattern tags (many-to-many)
+Table pattern_tags {
+  pattern_id integer [ref: > patterns.id]
+  tag_id integer [ref: > tags.id]
+  
+  indexes {
+    (pattern_id, tag_id) [pk]
+  }
+}
+
+// User favorites for yarns
+Table user_favorite_yarns {
+  user_id integer [ref: > users.id]
+  yarn_id integer [ref: > yarns.id]
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (user_id, yarn_id) [pk]
+  }
+}
+
+// User favorites for patterns
+Table user_favorite_patterns {
+  user_id integer [ref: > users.id]
+  pattern_id integer [ref: > patterns.id]
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (user_id, pattern_id) [pk]
+  }
+}
+
+// Yarn stash - what yarns a user owns
+Table user_yarn_stash {
+  id integer [primary key, increment]
+  user_id integer [ref: > users.id]
+  yarn_id integer [ref: > yarns.id]
+  quantity decimal(8,2) // amount owned (skeins, yards, etc.)
+  unit varchar(20) [default: "skeins"]
+  purchase_date date
+  cost decimal(10,2)
+  notes text
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+// Projects - track user's knitting projects
+Table projects {
+  id integer [primary key, increment]
+  user_id integer [ref: > users.id]
+  pattern_id integer [ref: > patterns.id, null]
+  name varchar(255) [not null]
+  status varchar(50) [default: "planned"] // planned, in_progress, completed, frogged
+  start_date date
+  completion_date date
+  notes text
+  image_url text
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+// Track which yarns are used in projects
+Table project_yarns {
+  id integer [primary key, increment]
+  project_id integer [ref: > projects.id]
+  yarn_id integer [ref: > yarns.id]
+  quantity_used decimal(8,2)
+  unit varchar(20) [default: "skeins"]
+  notes text
+}
+
+// Pattern requirements - what yarns/weights work with patterns
+Table pattern_yarn_requirements {
+  id integer [primary key, increment]
+  pattern_id integer [ref: > patterns.id]
+  yarn_weight varchar(50) [not null]
+  yardage_needed integer
+  suggested_yarns text // JSON array of yarn IDs or text descriptions
+}

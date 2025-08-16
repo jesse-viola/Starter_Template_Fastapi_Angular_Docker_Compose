@@ -1,0 +1,28 @@
+DB Ideas
+
+Login/user details
+ID
+User name
+passwd
+
+Favorite patterns
+ID
+URL
+description
+tag(s)
+
+Favorite yarns
+ID
+URL
+description
+tags(s)
+git
+Yard 2 meters converesion - hard coded
+
+Prior to Login
+gallery of 3 patterns randomized from a pool of 10-15
+
+Tag table
+Id
+name
+FK

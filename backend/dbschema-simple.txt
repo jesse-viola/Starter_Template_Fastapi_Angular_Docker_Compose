@@ -1,0 +1,76 @@
+// Knitting Application Phase 1 Database Schema
+// Simplified MVP version - use this at https://dbdiagram.io/
+
+Table users {
+  id integer [primary key, increment]
+  username varchar(50) [unique, not null]
+  email varchar(255) [unique, not null]
+  password_hash varchar(255) [not null]
+  created_at timestamp [default: `now()`]
+}
+
+Table yarns {
+  id integer [primary key, increment]
+  name varchar(255) [not null]
+  description text
+  url text
+  image_url text
+  created_at timestamp [default: `now()`]
+}
+
+Table patterns {
+  id integer [primary key, increment]
+  name varchar(255) [not null]
+  description text
+  url text
+  image_url text
+  created_at timestamp [default: `now()`]
+}
+
+Table tags {
+  id integer [primary key, increment]
+  name varchar(100) [unique, not null]
+  created_at timestamp [default: `now()`]
+}
+
+// Junction table for yarn tags (many-to-many)
+Table yarn_tags {
+  yarn_id integer [ref: > yarns.id]
+  tag_id integer [ref: > tags.id]
+  
+  indexes {
+    (yarn_id, tag_id) [pk]
+  }
+}
+
+// Junction table for pattern tags (many-to-many)
+Table pattern_tags {
+  pattern_id integer [ref: > patterns.id]
+  tag_id integer [ref: > tags.id]
+  
+  indexes {
+    (pattern_id, tag_id) [pk]
+  }
+}
+
+// User favorites for yarns
+Table user_favorite_yarns {
+  user_id integer [ref: > users.id]
+  yarn_id integer [ref: > yarns.id]
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (user_id, yarn_id) [pk]
+  }
+}
+
+// User favorites for patterns
+Table user_favorite_patterns {
+  user_id integer [ref: > users.id]
+  pattern_id integer [ref: > patterns.id]
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (user_id, pattern_id) [pk]
+  }
+}
