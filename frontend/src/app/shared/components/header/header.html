@@ -22,8 +22,11 @@
         <div class="actions-container">
             <!-- Search -->
             <div class="search-container">
-                <mat-icon>search</mat-icon>
-                <span class="search-text">Search</span>
+                <search-bar placeholder="Search patterns, yarns, and more..." appearance="outline" [debounceMs]="300"
+                    [showButton]="false" (searchChange)="onSearchChange($event)"
+                    (searchSubmit)="onSearchSubmit($event)" (searchFocus)="onSearchFocus()"
+                    (mouseEntered)="onMouseEntered()" (mouseLeft)="onMouseLeft()">
+                </search-bar>
             </div>
 
             <!-- Icons -->

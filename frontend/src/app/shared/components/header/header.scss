@@ -84,27 +84,19 @@
     justify-self: end;
 }
 
-// Search container
+// Search container - Minimal wrapper for search bar component
 .search-container {
     display: flex;
     align-items: center;
-    background-color: #f5f5f5;
-    border-radius: 20px;
-    padding: 8px 16px;
-    width: clamp(180px, 15vw, 320px);
-    cursor: pointer;
-
-    mat-icon {
-        color: #757575;
-        margin-right: 8px;
-        font-size: 20px;
-        height: 20px;
-        width: 20px;
-    }
-
-    .search-text {
-        color: #757575;
-        font-size: 14px;
+    width: clamp(250px, 20vw, 400px);
+    height: 40px; // Match grid item height
+    
+    // Ensure search bar takes full width and aligns properly
+    search-bar {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
     }
 }
 

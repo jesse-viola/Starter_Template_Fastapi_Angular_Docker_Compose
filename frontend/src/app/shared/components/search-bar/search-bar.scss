@@ -1,0 +1,278 @@
+/* 🎯 LEARNING OBJECTIVE: CSS/SCSS Architecture & Material Design Integration */
+/* This stylesheet demonstrates:
+   1. SCSS nesting and variables
+   2. Flexbox layout patterns
+   3. Responsive design with media queries
+   4. CSS Grid alternatives
+   5. Material Design spacing principles */
+
+/* 🎯 HOST COMPONENT: Remove any default margins */
+:host {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+/* 📦 MAIN CONTAINER: Flexbox layout for search components */
+.search-bar-container {
+  position: relative; // For absolute positioning of icons
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px; // Fixed height to match header icons
+  max-width: 400px; // Constrain width to fit in header
+  min-width: 0; // Allow shrinking below content size
+  margin: 0; // Ensure no margins
+  padding: 0; // Remove padding since we're using absolute positioning
+
+  /* 🎨 Clean white background for light header */
+  background-color: #f8f9fa;
+  border-radius: 20px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔍 SEARCH ICON: Positioned on the left */
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  color: #666;
+  z-index: 1;
+  pointer-events: none; // Allow clicks to pass through to input
+}
+
+/* 📝 SEARCH INPUT: Clean, styled input field */
+.search-input {
+  flex: 1;
+  width: 100%;
+  height: 36px;
+  padding: 0 40px 0 40px; // Space for search icon and clear button
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #333;
+  
+  &::placeholder {
+    color: #666;
+  }
+  
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+/* ❌ CLEAR BUTTON: Positioned on the right */
+.clear-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    color: #666;
+  }
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* 🔘 SEARCH BUTTON: Fixed size with icon */
+.search-button {
+  height: 36px; // Match form field height
+  min-width: 36px; // Minimum square size
+  width: 36px; // Fixed width for icon-only in header
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; // Circular button
+  padding: 0; // Remove default padding
+
+  /* 🎯 NESTED SELECTOR: SCSS nesting feature */
+  mat-icon {
+    margin: 0; // Center the icon perfectly
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  /* Hover and active states */
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    mat-icon {
+      transform: scale(1.1);
+    }
+  }
+
+  &:active {
+    background-color: rgba(255, 255, 255, 0.2);
+
+    mat-icon {
+      transform: scale(0.95);
+    }
+  }
+
+  /* Hide button text in header - icon only */
+  .mat-button-wrapper>span:not(mat-icon) {
+    display: none;
+  }
+}
+
+/* 📱 RESPONSIVE DESIGN: Adjust for very small screens */
+@media (max-width: 768px) {
+  .search-bar-container {
+    max-width: 300px; // Even smaller on mobile
+    gap: 4px;
+  }
+
+  .search-button {
+    height: 36px;
+    width: 36px;
+    min-width: 36px;
+  }
+}
+
+/* For very small screens, consider hiding search or making it expandable */
+@media (max-width: 480px) {
+  .search-bar-container {
+    max-width: 200px;
+
+    /* Option 1: Collapse to icon only, expand on click */
+    &.collapsed {
+      width: 40px;
+
+      .search-field {
+        width: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+      }
+
+      &.expanded .search-field {
+        width: 160px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+}
+
+/* 🎛️ COMPONENT VARIANTS: Different size options */
+.search-bar-container {
+  &.compact {
+    max-width: 200px;
+    gap: 4px;
+
+    .search-button {
+      height: 32px;
+      width: 32px;
+      min-width: 32px;
+    }
+  }
+
+  &.large {
+    max-width: 600px;
+    gap: 12px;
+    padding: 8px;
+
+    .search-button {
+      height: 48px;
+      min-width: 120px;
+      width: auto;
+      border-radius: 24px;
+
+      /* Show text in large variant */
+      .mat-button-wrapper>span:not(mat-icon) {
+        display: inline;
+      }
+    }
+  }
+
+  &.rounded {
+    border-radius: 28px;
+  }
+
+  &.minimal {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+}
+
+/* 🎨 THEMING SUPPORT: CSS Custom Properties */
+:host {
+  --search-gap: 8px;
+  --search-height: 40px;
+  --search-border-radius: 20px;
+  --search-max-width: 400px;
+  --search-bg: rgba(255, 255, 255, 0.1);
+  --search-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Note: Variables defined but container uses direct values to avoid conflicts */
+
+/* 🌙 DARK MODE SUPPORT */
+@media (prefers-color-scheme: dark) {
+  :host {
+    --search-bg: rgba(0, 0, 0, 0.3);
+    --search-border: rgba(255, 255, 255, 0.1);
+  }
+
+  .search-field {
+    &:focus-within {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+}
+
+/* ♿ ACCESSIBILITY ENHANCEMENTS */
+@media (prefers-reduced-motion: reduce) {
+
+  .search-button mat-icon,
+  .search-field {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .search-bar-container {
+    border-width: 2px;
+    border-color: currentColor;
+  }
+
+  .search-button:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* 🔧 RESPONSIVE FOCUS STATES */
+.search-bar-container:focus-within {
+  border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+}
