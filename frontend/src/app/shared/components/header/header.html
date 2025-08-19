@@ -22,10 +22,19 @@
         <div class="actions-container">
             <!-- Search -->
             <div class="search-container">
-                <search-bar placeholder="Search patterns, yarns, and more..." appearance="outline" [debounceMs]="300"
-                    [showButton]="false" (searchChange)="onSearchChange($event)"
-                    (searchSubmit)="onSearchSubmit($event)" (searchFocus)="onSearchFocus()"
-                    (mouseEntered)="onMouseEntered()" (mouseLeft)="onMouseLeft()">
+                <search-bar 
+                    placeholder="Search patterns, yarns, and more..." 
+                    appearance="outline" 
+                    [debounceMs]="300"
+                    [showButton]="false" 
+                    [suggestions]="searchSuggestions"
+                    [enableSuggestions]="true"
+                    (searchChange)="onSearchChange($event)"
+                    (searchSubmit)="onSearchSubmit($event)" 
+                    (searchFocus)="onSearchFocus()"
+                    (mouseEntered)="onMouseEntered()" 
+                    (mouseLeft)="onMouseLeft()"
+                    (suggestionSelected)="onSuggestionSelected($event)">
                 </search-bar>
             </div>
 

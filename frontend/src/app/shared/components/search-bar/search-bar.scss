@@ -6,261 +6,260 @@
    4. CSS Grid alternatives
    5. Material Design spacing principles */
 
-/* 🎯 HOST COMPONENT: Remove any default margins */
-:host {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  margin: 0;
-  padding: 0;
+/* 🎯 CSS CUSTOM PROPERTIES - Theming System */
+:root {
+  --search-bar-height: 40px;
+  --search-bar-radius: 20px;
+  --search-bar-bg: #f8f9fa;
+  --search-bar-bg-hover: #f1f3f4;
+  --search-bar-border: #e0e0e0;
+  --search-bar-border-hover: #757575;
+  --search-bar-border-focus: #6200ee;
+  --search-bar-shadow-focus: 0 2px 8px rgba(98, 0, 238, 0.15);
+  --search-bar-text: #333;
+  --search-bar-placeholder: #999;
+  --search-bar-icon: #757575;
+  
+  /* Autocomplete panel */
+  --autocomplete-bg: #ffffff;
+  --autocomplete-border: #e0e0e0;
+  --autocomplete-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --autocomplete-radius: 16px;
+  --autocomplete-option-hover: #f8f9fa;
+  --autocomplete-option-selected: rgba(98, 0, 238, 0.06);
+  --autocomplete-option-radius: 12px;
 }
 
-/* 📦 MAIN CONTAINER: Flexbox layout for search components */
+/* 🎯 HOST COMPONENT */
+search-bar {
+  display: block;
+  width: 100%;
+  height: var(--search-bar-height);
+}
+
+/* 📦 MAIN CONTAINER */
 .search-bar-container {
-  position: relative; // For absolute positioning of icons
   display: flex;
   align-items: center;
   width: 100%;
-  height: 40px; // Fixed height to match header icons
-  max-width: 400px; // Constrain width to fit in header
-  min-width: 0; // Allow shrinking below content size
-  margin: 0; // Ensure no margins
-  padding: 0; // Remove padding since we're using absolute positioning
-
-  /* 🎨 Clean white background for light header */
-  background-color: #f8f9fa;
-  border-radius: 20px;
-  border: 1px solid #e9ecef;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: var(--search-bar-height);
+  gap: 8px;
 }
 
-/* 🔍 SEARCH ICON: Positioned on the left */
+/* 🔍 CUSTOM SEARCH INPUT WRAPPER */
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: var(--search-bar-height);
+  border-radius: var(--search-bar-radius);
+  background-color: var(--search-bar-bg);
+  border: 1px solid var(--search-bar-border);
+  padding: 0 16px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: var(--search-bar-border-hover);
+    background-color: var(--search-bar-bg-hover);
+  }
+  
+  &:focus-within {
+    border-color: var(--search-bar-border-focus);
+    background-color: var(--search-bar-bg);
+    box-shadow: var(--search-bar-shadow-focus);
+  }
+}
+
+/* 🔍 SEARCH ICON */
 .search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
   font-size: 18px;
   height: 18px;
   width: 18px;
-  color: #666;
-  z-index: 1;
-  pointer-events: none; // Allow clicks to pass through to input
+  color: var(--search-bar-icon);
+  margin-right: 12px;
+  flex-shrink: 0;
 }
 
-/* 📝 SEARCH INPUT: Clean, styled input field */
+/* 📝 SEARCH INPUT */
 .search-input {
   flex: 1;
-  width: 100%;
-  height: 36px;
-  padding: 0 40px 0 40px; // Space for search icon and clear button
+  height: 100%;
+  background: transparent;
   border: none;
   outline: none;
-  background: transparent;
+  color: var(--search-bar-text);
   font-size: 14px;
-  color: #333;
+  padding: 0;
+  caret-color: var(--search-bar-border-focus);
   
   &::placeholder {
-    color: #666;
-  }
-  
-  &:focus {
-    outline: none;
-    border: none;
+    color: var(--search-bar-placeholder);
   }
 }
 
-/* ❌ CLEAR BUTTON: Positioned on the right */
+/* ❌ CLEAR BUTTON */
 .clear-button {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
+  background: none;
   border: none;
-  background: transparent;
+  padding: 4px;
+  margin-left: 8px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 1;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
   
   mat-icon {
     font-size: 16px;
     height: 16px;
     width: 16px;
-    color: #666;
+    color: var(--search-bar-icon);
   }
   
   &:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    background-color: rgba(0, 0, 0, 0.15);
   }
 }
 
-/* 🔘 SEARCH BUTTON: Fixed size with icon */
+/* 🔘 SEARCH BUTTON: Cohesive with header styling */
 .search-button {
-  height: 36px; // Match form field height
-  min-width: 36px; // Minimum square size
-  width: 36px; // Fixed width for icon-only in header
+  height: 40px;
+  min-width: 40px;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; // Circular button
-  padding: 0; // Remove default padding
+  border-radius: 20px;
+  padding: 0 12px;
+  background-color: #6200ee; // Match header theme color
+  color: white;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
 
-  /* 🎯 NESTED SELECTOR: SCSS nesting feature */
   mat-icon {
-    margin: 0; // Center the icon perfectly
+    margin-right: 8px;
     font-size: 18px;
     height: 18px;
     width: 18px;
-    transition: transform 0.2s ease;
   }
 
-  /* Hover and active states */
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-
-    mat-icon {
-      transform: scale(1.1);
-    }
+    background-color: #4a00b3; // Darker shade of header theme
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(98, 0, 238, 0.3);
   }
 
   &:active {
-    background-color: rgba(255, 255, 255, 0.2);
-
-    mat-icon {
-      transform: scale(0.95);
-    }
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(98, 0, 238, 0.3);
   }
 
-  /* Hide button text in header - icon only */
-  .mat-button-wrapper>span:not(mat-icon) {
-    display: none;
+  &:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 }
 
-/* 📱 RESPONSIVE DESIGN: Adjust for very small screens */
+/* 📱 RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .search-bar-container {
-    max-width: 300px; // Even smaller on mobile
     gap: 4px;
+  }
+  
+  .search-field {
+    ::ng-deep .mat-mdc-form-field-flex {
+      border-radius: 16px;
+    }
   }
 
   .search-button {
     height: 36px;
-    width: 36px;
     min-width: 36px;
+    padding: 0 8px;
+    border-radius: 16px;
+    
+    mat-icon {
+      margin-right: 4px;
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+    }
   }
 }
 
-/* For very small screens, consider hiding search or making it expandable */
 @media (max-width: 480px) {
-  .search-bar-container {
-    max-width: 200px;
-
-    /* Option 1: Collapse to icon only, expand on click */
-    &.collapsed {
-      width: 40px;
-
-      .search-field {
-        width: 0;
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s ease;
-      }
-
-      &.expanded .search-field {
-        width: 160px;
-        opacity: 1;
-        pointer-events: auto;
-      }
-    }
-  }
-}
-
-/* 🎛️ COMPONENT VARIANTS: Different size options */
-.search-bar-container {
-  &.compact {
-    max-width: 200px;
-    gap: 4px;
-
-    .search-button {
-      height: 32px;
-      width: 32px;
-      min-width: 32px;
-    }
-  }
-
-  &.large {
-    max-width: 600px;
-    gap: 12px;
-    padding: 8px;
-
-    .search-button {
-      height: 48px;
-      min-width: 120px;
-      width: auto;
-      border-radius: 24px;
-
-      /* Show text in large variant */
-      .mat-button-wrapper>span:not(mat-icon) {
-        display: inline;
-      }
-    }
-  }
-
-  &.rounded {
-    border-radius: 28px;
-  }
-
-  &.minimal {
-    background: none;
-    border: none;
+  .search-button {
+    // Icon only on very small screens
     padding: 0;
+    width: 36px;
+    
+    mat-icon {
+      margin: 0;
+    }
+    
+    // Hide text content on very small screens
+    span:not(.mat-icon) {
+      display: none;
+    }
   }
 }
 
-/* 🎨 THEMING SUPPORT: CSS Custom Properties */
-:host {
-  --search-gap: 8px;
-  --search-height: 40px;
-  --search-border-radius: 20px;
-  --search-max-width: 400px;
-  --search-bg: rgba(255, 255, 255, 0.1);
-  --search-border: rgba(255, 255, 255, 0.2);
-}
-
-/* Note: Variables defined but container uses direct values to avoid conflicts */
-
-/* 🌙 DARK MODE SUPPORT */
+/* 🌙 DARK MODE SUPPORT - Override custom properties */
 @media (prefers-color-scheme: dark) {
-  :host {
-    --search-bg: rgba(0, 0, 0, 0.3);
-    --search-border: rgba(255, 255, 255, 0.1);
+  :root {
+    --search-bar-bg: #343a40;
+    --search-bar-bg-hover: #495057;
+    --search-bar-border: #495057;
+    --search-bar-border-hover: #6c757d;
+    --search-bar-border-focus: #0d6efd;
+    --search-bar-shadow-focus: 0 2px 8px rgba(13, 110, 253, 0.15);
+    --search-bar-text: #f8f9fa;
+    --search-bar-placeholder: #adb5bd;
+    --search-bar-icon: #adb5bd;
+    
+    /* Dark autocomplete panel */
+    --autocomplete-bg: #212529;
+    --autocomplete-border: #495057;
+    --autocomplete-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+    --autocomplete-option-hover: #343a40;
+    --autocomplete-option-selected: rgba(98, 0, 238, 0.15);
   }
-
-  .search-field {
-    &:focus-within {
-      background-color: rgba(255, 255, 255, 0.05);
+  
+  .suggestion-category {
+    background-color: #343a40;
+    border-color: #495057;
+    color: #adb5bd;
+    
+    &[data-category="recent"] {
+      background-color: rgba(98, 0, 238, 0.15);
+      color: #a855f7;
+      border-color: rgba(98, 0, 238, 0.3);
     }
   }
 }
 
 /* ♿ ACCESSIBILITY ENHANCEMENTS */
 @media (prefers-reduced-motion: reduce) {
-
-  .search-button mat-icon,
-  .search-field {
+  .search-button,
+  .search-field ::ng-deep .mat-mdc-form-field-flex,
+  ::ng-deep .mat-mdc-option {
     transition: none;
   }
 }
 
 @media (prefers-contrast: high) {
-  .search-bar-container {
+  .search-field ::ng-deep .mat-mdc-form-field-flex {
     border-width: 2px;
     border-color: currentColor;
   }
@@ -271,8 +270,140 @@
   }
 }
 
-/* 🔧 RESPONSIVE FOCUS STATES */
-.search-bar-container:focus-within {
-  border-color: #007bff;
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+/* 🔍 AUTOCOMPLETE PANEL STYLING - Global without ng-deep */
+.mat-mdc-autocomplete-panel {
+  max-height: 320px;
+  border-radius: var(--autocomplete-radius);
+  box-shadow: var(--autocomplete-shadow);
+  border: 1px solid var(--autocomplete-border);
+  margin-top: 4px;
+  background-color: var(--autocomplete-bg);
+  padding: 8px;
+  overflow: hidden;
+  transform-origin: top;
+  animation: autocomplete-enter 0.2s ease-out;
+  
+  // Force the panel to match the search input width
+  min-width: 100% !important;
+  width: 100% !important;
+  
+  // Hide scrollbar but keep functionality
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE/Edge
+  
+  &::-webkit-scrollbar {
+    display: none; // Chrome/Safari/Opera
+  }
+}
+
+// Additional override for the overlay container
+.cdk-overlay-pane .mat-mdc-autocomplete-panel {
+  min-width: 100% !important;
+  width: 100% !important;
+}
+
+// Smooth entrance animation
+@keyframes autocomplete-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 🎯 AUTOCOMPLETE OPTION STYLING */
+.mat-mdc-option {
+  display: flex;
+  align-items: center;
+  padding: 12px 12px;
+  min-height: 52px;
+  border-radius: var(--autocomplete-option-radius);
+  margin: 2px 0;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  position: relative;
+  
+  &:hover,
+  &.mat-mdc-option-active {
+    background-color: var(--autocomplete-option-hover);
+    transform: translateX(2px);
+  }
+  
+  &.mdc-list-item--selected {
+    background-color: var(--autocomplete-option-selected);
+    color: var(--search-bar-border-focus);
+    
+    .suggestion-text {
+      color: var(--search-bar-border-focus);
+      font-weight: 500;
+    }
+    
+    .suggestion-icon {
+      color: var(--search-bar-border-focus);
+    }
+  }
+  
+  // Ripple effect on click
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* 🔍 SUGGESTION CONTENT STYLING */
+.suggestion-icon {
+  margin-right: 14px;
+  color: var(--search-bar-icon);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.suggestion-text {
+  flex: 1;
+  font-size: 14px;
+  color: var(--search-bar-text);
+  font-weight: 400;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+.suggestion-category {
+  font-size: 10px;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-left: 12px;
+  padding: 4px 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  
+  // Different category colors
+  &[data-category="recent"] {
+    background-color: rgba(98, 0, 238, 0.08);
+    color: #6200ee;
+    border-color: rgba(98, 0, 238, 0.2);
+  }
+  
+  &[data-category="pattern"] {
+    background-color: rgba(40, 167, 69, 0.08);
+    color: #28a745;
+    border-color: rgba(40, 167, 69, 0.2);
+  }
+  
+  &[data-category="product"] {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+    border-color: rgba(255, 193, 7, 0.3);
+  }
 }

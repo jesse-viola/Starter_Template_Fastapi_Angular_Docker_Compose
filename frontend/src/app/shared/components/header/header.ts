@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { RouterLink } from '@angular/router';
-import { SearchBar } from '../search-bar/search-bar';
+import { SearchBar, SearchSuggestion } from '../search-bar/search-bar';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +21,18 @@ import { SearchBar } from '../search-bar/search-bar';
   styleUrl: './header.scss'
 })
 export class Header {
+  // 🔍 SAMPLE SUGGESTIONS: Mock data for demonstration
+  searchSuggestions: SearchSuggestion[] = [
+    { id: '1', text: 'Cable knit sweater pattern', category: 'pattern', icon: 'description' },
+    { id: '2', text: 'Merino wool yarn', category: 'product', icon: 'shopping_cart' },
+    { id: '3', text: 'Circular knitting needles', category: 'product', icon: 'build' },
+    { id: '4', text: 'Beginner scarf tutorial', category: 'pattern', icon: 'school' },
+    { id: '5', text: 'Alpaca blend yarn', category: 'product', icon: 'shopping_cart' },
+    { id: '6', text: 'Fair isle techniques', category: 'pattern', icon: 'palette' },
+    { id: '7', text: 'Baby blanket patterns', category: 'pattern', icon: 'child_friendly' },
+    { id: '8', text: 'Cotton yarn for summer', category: 'product', icon: 'wb_sunny' }
+  ];
+
   onSearchChange(searchTerm: string) {
     // console.log('Search changed:', searchTerm);
     // Implement your search logic here
@@ -41,5 +53,10 @@ export class Header {
 
   onMouseLeft() {
     // console.log('Mouse left search');
+  }
+
+  onSuggestionSelected(suggestion: SearchSuggestion) {
+    console.log('Suggestion selected:', suggestion);
+    // Handle suggestion selection - navigate, filter, etc.
   }
 }

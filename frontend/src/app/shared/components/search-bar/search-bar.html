@@ -7,47 +7,60 @@
      5. Accessibility best practices -->
 
 <div class="search-bar-container">
-  <mat-icon class="search-icon">search</mat-icon>
-  <input
-    #input
-    class="search-input"
-    [formControl]="searchControl"
-    [placeholder]="placeholder"
-    (keyup.enter)="onSubmit()"
-    (mouseenter)="onMouseEnter()"
-    (mouseleave)="onMouseLeave()"
-    (focus)="onFocus()"
-    (input)="onInput()"
-    type="text"
-  />
-
-  <!-- ❌ CLEAR BUTTON: Only shows when there's text -->
-  <!-- TODO FOR YOU: What does @if do here? Try removing it temporarily -->
-  @if (searchControl.value) {
-  <button
-    class="clear-button"
-    (click)="clearSearch()"
-    type="button"
-    aria-label="Clear search"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
-  }
+  <div class="search-input-wrapper">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      #input
+      class="search-input"
+      [formControl]="searchControl"
+      [placeholder]="placeholder"
+      [matAutocomplete]="auto"
+      (keyup.enter)="onSubmit()"
+      (mouseenter)="onMouseEnter()"
+      (mouseleave)="onMouseLeave()"
+      (focus)="onFocus()"
+      (input)="onInput()"
+      type="text"
+    />
+    
+    <!-- ❌ CLEAR BUTTON: Only shows when there's text -->
+    @if (searchControl.value) {
+      <button class="clear-button" (click)="clearSearch()" type="button" aria-label="Clear search">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+  
+  <!-- Material Autocomplete Panel -->
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSuggestionSelected($event.option.value)">
+    @if (enableSuggestions) {
+      @for (suggestion of filteredSuggestions | async; track suggestion.id) {
+        <mat-option [value]="suggestion">
+          @if (suggestion.icon) {
+            <mat-icon class="suggestion-icon">{{ suggestion.icon }}</mat-icon>
+          }
+          <span class="suggestion-text">{{ suggestion.text }}</span>
+          @if (suggestion.category) {
+            <span class="suggestion-category">{{ suggestion.category }}</span>
+          }
+        </mat-option>
+      }
+    }
+  </mat-autocomplete>
 
   <!-- 🔘 SUBMIT BUTTON: Triggers search action (optional) -->
-  <!-- TODO FOR YOU: Add [disabled] binding - when should this button be disabled? -->
-  <!-- TODO FOR YOU: Try changing mat-raised-button to mat-flat-button or mat-stroked-button -->
   @if (showButton) {
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onSubmit()"
-    class="search-button"
-    type="button"
-  >
-    <mat-icon>search</mat-icon>
-    Search
-  </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      class="search-button"
+      type="button"
+      [disabled]="isSearchEmpty()"
+    >
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
   }
 </div>
 

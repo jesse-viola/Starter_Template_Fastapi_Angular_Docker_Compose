@@ -84,19 +84,19 @@
     justify-self: end;
 }
 
-// Search container - Minimal wrapper for search bar component
+// Search container - Optimal flex integration  
 .search-container {
     display: flex;
     align-items: center;
     width: clamp(250px, 20vw, 400px);
-    height: 40px; // Match grid item height
+    height: 40px;
+    justify-self: center; // Center in grid area
     
-    // Ensure search bar takes full width and aligns properly
+    // Ensure search bar component integration
     search-bar {
         width: 100%;
         height: 100%;
-        display: flex;
-        align-items: center;
+        display: block; // Let search-bar manage its own layout
     }
 }
 
