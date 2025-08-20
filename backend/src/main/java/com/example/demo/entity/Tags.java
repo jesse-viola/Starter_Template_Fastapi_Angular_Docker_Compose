@@ -26,7 +26,7 @@ public class Tags {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
     
-    public Tag(String name) {
+    public Tags(String name) {
         this.name = name;
     }
     
@@ -65,7 +65,7 @@ public class Tags {
     
     @Override
     public String toString() {
-        return "Tag{" +
+        return "Tags{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", createdAt=" + createdAt +
