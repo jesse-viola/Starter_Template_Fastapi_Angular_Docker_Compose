@@ -26,8 +26,6 @@ public class Tags {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
     
-    public Tag() {}
-    
     public Tag(String name) {
         this.name = name;
     }
