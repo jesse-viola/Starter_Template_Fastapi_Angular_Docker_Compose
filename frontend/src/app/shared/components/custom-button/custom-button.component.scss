@@ -1,0 +1,171 @@
+// Base button styles
+.custom-btn {
+  border-radius: 25px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  position: relative;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px;
+  
+  // Disable Material's default transform
+  transform: none !important;
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-2px) !important;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Primary variant (raised button)
+.custom-btn--primary {
+  background-color: white !important;
+  color: #7c3aed !important;
+  
+  &:hover:not(:disabled) {
+    background-color: #f8fafc !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  &:active {
+    transform: translateY(0) !important;
+  }
+}
+
+// Secondary variant (stroked button)
+.custom-btn--secondary {
+  background-color: transparent !important;
+  color: white !important;
+  border-color: white !important;
+  border-width: 2px !important;
+  
+  &:hover:not(:disabled) {
+    background-color: white !important;
+    color: #7c3aed !important;
+  }
+  
+  &:active {
+    transform: translateY(0) !important;
+  }
+}
+
+// Tertiary variant (text button)
+.custom-btn--tertiary {
+  background-color: transparent !important;
+  color: #7c3aed !important;
+  
+  &:hover:not(:disabled) {
+    background-color: rgba(124, 58, 237, 0.1) !important;
+  }
+}
+
+// Size variants
+.custom-btn--small {
+  height: 36px !important;
+  padding: 0 16px !important;
+  font-size: 0.875rem !important;
+  min-width: 80px;
+}
+
+.custom-btn--medium {
+  height: 48px !important;
+  padding: 0 24px !important;
+  font-size: 1rem !important;
+  min-width: 120px;
+}
+
+.custom-btn--large {
+  height: 56px !important;
+  padding: 0 32px !important;
+  font-size: 1.125rem !important;
+  min-width: 160px;
+}
+
+// Full width
+.custom-btn--full-width {
+  width: 100% !important;
+  min-width: unset !important;
+}
+
+// Loading state
+.custom-btn--loading {
+  pointer-events: none;
+  
+  .loading-spinner {
+    animation: spin 1s linear infinite;
+  }
+}
+
+// Icon styles
+.button-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  
+  &--left {
+    margin-right: 4px;
+    margin-left: -4px;
+  }
+  
+  &--right {
+    margin-left: 4px;
+    margin-right: -4px;
+  }
+}
+
+// Button content
+.button-content {
+  display: flex;
+  align-items: center;
+  
+  &.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .custom-btn--small {
+    height: 32px !important;
+    padding: 0 12px !important;
+    font-size: 0.8rem !important;
+    min-width: 70px;
+  }
+  
+  .custom-btn--medium {
+    height: 44px !important;
+    padding: 0 20px !important;
+    font-size: 0.9rem !important;
+    min-width: 100px;
+  }
+  
+  .custom-btn--large {
+    height: 52px !important;
+    padding: 0 28px !important;
+    font-size: 1rem !important;
+    min-width: 140px;
+  }
+}

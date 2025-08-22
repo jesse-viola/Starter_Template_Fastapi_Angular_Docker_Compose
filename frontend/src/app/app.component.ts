@@ -13,7 +13,6 @@ import { Header } from './shared/components/header/header';
     </main>
   `,
   styles: [`
-    main { padding: 16px; }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
