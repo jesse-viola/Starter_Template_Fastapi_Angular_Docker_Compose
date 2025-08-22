@@ -1,0 +1,16 @@
+// Override custom-button primary colors for login button
+app-custom-button {
+  .custom-btn--primary {
+    background-color: #4A90E2 !important;
+    color: white !important;
+    
+    &:hover:not(:disabled) {
+      background-color: #357ABD !important;
+      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.25) !important;
+    }
+    
+    &:active {
+      background-color: #2E5F99 !important;
+    }
+  }
+}

@@ -13,17 +13,18 @@
   --search-bar-bg: #f8f9fa;
   --search-bar-bg-hover: #f1f3f4;
   --search-bar-border: #e0e0e0;
-  --search-bar-border-hover: #757575;
+  --search-bar-border-hover: #75757571;
   --search-bar-border-focus: #6200ee;
   --search-bar-shadow-focus: 0 2px 8px rgba(98, 0, 238, 0.15);
   --search-bar-text: #333;
   --search-bar-placeholder: #999;
   --search-bar-icon: #757575;
-  
+
   /* Autocomplete panel */
   --autocomplete-bg: #ffffff;
   --autocomplete-border: #e0e0e0;
-  --autocomplete-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --autocomplete-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
   --autocomplete-radius: 16px;
   --autocomplete-option-hover: #f8f9fa;
   --autocomplete-option-selected: rgba(98, 0, 238, 0.06);
@@ -58,12 +59,12 @@ search-bar {
   border: 1px solid var(--search-bar-border);
   padding: 0 16px;
   transition: all 0.2s ease;
-  
+
   &:hover {
     border-color: var(--search-bar-border-hover);
     background-color: var(--search-bar-bg-hover);
   }
-  
+
   &:focus-within {
     border-color: var(--search-bar-border-focus);
     background-color: var(--search-bar-bg);
@@ -92,7 +93,7 @@ search-bar {
   font-size: 14px;
   padding: 0;
   caret-color: var(--search-bar-border-focus);
-  
+
   &::placeholder {
     color: var(--search-bar-placeholder);
   }
@@ -111,18 +112,18 @@ search-bar {
   cursor: pointer;
   transition: background-color 0.2s ease;
   flex-shrink: 0;
-  
+
   mat-icon {
     font-size: 16px;
     height: 16px;
     width: 16px;
     color: var(--search-bar-icon);
   }
-  
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
-  
+
   &:active {
     background-color: rgba(0, 0, 0, 0.15);
   }
@@ -176,7 +177,7 @@ search-bar {
   .search-bar-container {
     gap: 4px;
   }
-  
+
   .search-field {
     ::ng-deep .mat-mdc-form-field-flex {
       border-radius: 16px;
@@ -188,7 +189,7 @@ search-bar {
     min-width: 36px;
     padding: 0 8px;
     border-radius: 16px;
-    
+
     mat-icon {
       margin-right: 4px;
       font-size: 16px;
@@ -203,11 +204,11 @@ search-bar {
     // Icon only on very small screens
     padding: 0;
     width: 36px;
-    
+
     mat-icon {
       margin: 0;
     }
-    
+
     // Hide text content on very small screens
     span:not(.mat-icon) {
       display: none;
@@ -216,9 +217,8 @@ search-bar {
 }
 
 /* 🌙 DARK MODE SUPPORT - Override custom properties */
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --search-bar-bg: #343a40;
     --search-bar-bg-hover: #495057;
     --search-bar-border: #495057;
     --search-bar-border-hover: #6c757d;
@@ -227,20 +227,21 @@ search-bar {
     --search-bar-text: #f8f9fa;
     --search-bar-placeholder: #adb5bd;
     --search-bar-icon: #adb5bd;
-    
+
     /* Dark autocomplete panel */
     --autocomplete-bg: #212529;
     --autocomplete-border: #495057;
-    --autocomplete-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+    --autocomplete-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.2);
     --autocomplete-option-hover: #343a40;
     --autocomplete-option-selected: rgba(98, 0, 238, 0.15);
   }
-  
+
   .suggestion-category {
     background-color: #343a40;
     border-color: #495057;
     color: #adb5bd;
-    
+
     &[data-category="recent"] {
       background-color: rgba(98, 0, 238, 0.15);
       color: #a855f7;
@@ -282,17 +283,17 @@ search-bar {
   overflow: hidden;
   transform-origin: top;
   animation: autocomplete-enter 0.2s ease-out;
-  
+
   // Force the panel to match the search input width
   min-width: 100% !important;
   width: 100% !important;
-  
+
   // Hide scrollbar but keep functionality
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none; // Firefox
   -ms-overflow-style: none; // IE/Edge
-  
+
   &::-webkit-scrollbar {
     display: none; // Chrome/Safari/Opera
   }
@@ -327,27 +328,27 @@ search-bar {
   transition: all 0.15s ease;
   cursor: pointer;
   position: relative;
-  
+
   &:hover,
   &.mat-mdc-option-active {
     background-color: var(--autocomplete-option-hover);
     transform: translateX(2px);
   }
-  
+
   &.mdc-list-item--selected {
     background-color: var(--autocomplete-option-selected);
     color: var(--search-bar-border-focus);
-    
+
     .suggestion-text {
       color: var(--search-bar-border-focus);
       font-weight: 500;
     }
-    
+
     .suggestion-icon {
       color: var(--search-bar-border-focus);
     }
   }
-  
+
   // Ripple effect on click
   &:active {
     transform: scale(0.98);
@@ -387,20 +388,20 @@ search-bar {
   font-weight: 600;
   flex-shrink: 0;
   transition: all 0.15s ease;
-  
+
   // Different category colors
   &[data-category="recent"] {
     background-color: rgba(98, 0, 238, 0.08);
     color: #6200ee;
     border-color: rgba(98, 0, 238, 0.2);
   }
-  
+
   &[data-category="pattern"] {
     background-color: rgba(40, 167, 69, 0.08);
     color: #28a745;
     border-color: rgba(40, 167, 69, 0.2);
   }
-  
+
   &[data-category="product"] {
     background-color: rgba(255, 193, 7, 0.1);
     color: #ffc107;

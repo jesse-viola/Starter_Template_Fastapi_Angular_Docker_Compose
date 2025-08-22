@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterLink } from '@angular/router';
 import { SearchBar, SearchSuggestion } from '../search-bar/search-bar';
+import { LoginButton } from '../login-button/login-button';
 
 @Component({
   selector: 'app-header',
@@ -15,23 +16,67 @@ import { SearchBar, SearchSuggestion } from '../search-bar/search-bar';
     MatIconModule,
     MatFormFieldModule,
     RouterLink,
-    SearchBar
+    SearchBar,
+    LoginButton,
   ],
   templateUrl: './header.html',
-  styleUrl: './header.scss'
+  styleUrl: './header.scss',
 })
 export class Header {
   // 🔍 SAMPLE SUGGESTIONS: Mock data for demonstration
   searchSuggestions: SearchSuggestion[] = [
-    { id: '1', text: 'Cable knit sweater pattern', category: 'pattern', icon: 'description' },
-    { id: '2', text: 'Merino wool yarn', category: 'product', icon: 'shopping_cart' },
-    { id: '3', text: 'Circular knitting needles', category: 'product', icon: 'build' },
-    { id: '4', text: 'Beginner scarf tutorial', category: 'pattern', icon: 'school' },
-    { id: '5', text: 'Alpaca blend yarn', category: 'product', icon: 'shopping_cart' },
-    { id: '6', text: 'Fair isle techniques', category: 'pattern', icon: 'palette' },
-    { id: '7', text: 'Baby blanket patterns', category: 'pattern', icon: 'child_friendly' },
-    { id: '8', text: 'Cotton yarn for summer', category: 'product', icon: 'wb_sunny' }
+    {
+      id: '1',
+      text: 'Cable knit sweater pattern',
+      category: 'pattern',
+      icon: 'description',
+    },
+    {
+      id: '2',
+      text: 'Merino wool yarn',
+      category: 'product',
+      icon: 'shopping_cart',
+    },
+    {
+      id: '3',
+      text: 'Circular knitting needles',
+      category: 'product',
+      icon: 'build',
+    },
+    {
+      id: '4',
+      text: 'Beginner scarf tutorial',
+      category: 'pattern',
+      icon: 'school',
+    },
+    {
+      id: '5',
+      text: 'Alpaca blend yarn',
+      category: 'product',
+      icon: 'shopping_cart',
+    },
+    {
+      id: '6',
+      text: 'Fair isle techniques',
+      category: 'pattern',
+      icon: 'palette',
+    },
+    {
+      id: '7',
+      text: 'Baby blanket patterns',
+      category: 'pattern',
+      icon: 'child_friendly',
+    },
+    {
+      id: '8',
+      text: 'Cotton yarn for summer',
+      category: 'product',
+      icon: 'wb_sunny',
+    },
   ];
+
+  // todo add the auth service
+  public isLoggedIn = true;
 
   onSearchChange(searchTerm: string) {
     // console.log('Search changed:', searchTerm);
