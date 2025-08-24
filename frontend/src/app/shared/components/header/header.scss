@@ -1,184 +1,482 @@
-// Main container
-.header-container {
-    width: 100%;
-    height: 64px;
-    background-color: white;
-    border-bottom: 1px solid #e0e0e0;
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
+/* ===== SCSS VARIABLES ===== */
+
+// Breakpoints
+$desktop-min: 1025px;
+$tablet-max: 1024px;
+$tablet-min: 769px;
+$mobile-max: 768px;
+$small-mobile-max: 480px;
+$tiny-mobile-max: 400px;
+
+// Header Layout
+$header-height: 64px;
+$header-padding-desktop: clamp(16px, 4vw, 48px);
+$header-padding-tablet: clamp(16px, 3vw, 32px);
+$header-padding-mobile: 16px;
+$header-padding-small: 12px;
+
+// Grid Gaps
+$header-gap-desktop: clamp(20px, 3vw, 32px);
+$header-gap-tablet: clamp(16px, 2vw, 24px);
+$header-gap-mobile: 12px;
+$header-gap-small: 8px;
+
+// Actions Container Gaps
+$actions-gap-desktop: clamp(16px, 2vw, 24px);
+$actions-gap-tablet: clamp(12px, 1.5vw, 18px);
+$actions-gap-mobile: 10px;
+$actions-gap-small: 8px;
+
+// Search Bar Widths
+$search-width-desktop: clamp(250px, 20vw, 400px);
+$search-width-tablet: clamp(200px, 15vw, 300px);
+$search-width-small-tablet: clamp(150px, 12vw, 200px);
+
+// Avatar Size
+$avatar-size: 32px;
+
+/* ===== RESPONSIVE MIXINS ===== */
+
+@mixin desktop-up {
+  @media (min-width: $desktop-min) {
+    @content;
+  }
 }
 
-// Content grid with flexible units
+@mixin tablet-down {
+  @media (max-width: $tablet-max) {
+    @content;
+  }
+}
+
+@mixin mobile-down {
+  @media (max-width: $mobile-max) {
+    @content;
+  }
+}
+
+@mixin small-mobile-down {
+  @media (max-width: $small-mobile-max) {
+    @content;
+  }
+}
+
+@mixin tiny-mobile-down {
+  @media (max-width: $tiny-mobile-max) {
+    @content;
+  }
+}
+
+/* ===== MAIN CONTAINER ===== */
+
+// Main container
+.header-container {
+  width: 100%;
+  height: $header-height;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: stretch;
+  box-sizing: border-box;
+}
+
+// Content grid with better distribution
 .header-content {
-    display: grid;
-    grid-template-columns: auto minmax(auto, 3fr) minmax(auto, 1fr);
-    column-gap: clamp(16px, 3vw, 32px);
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 0 clamp(16px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr);
+  grid-template-areas: "logo-nav search actions";
+  column-gap: $header-gap-desktop;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 $header-padding-desktop;
+}
+
+// Actions container - Right aligned in grid
+.actions-container {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $actions-gap-desktop;
+  
+  // Login/Profile is always the last item
+  .login-profile-area {
+    order: 999;
+  }
+}
+
+// Combined logo and navigation section
+.logo-nav-section {
+  grid-area: logo-nav;
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 4vw, 48px);
 }
 
 // Logo section
 .logo-container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  .logo {
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: var(--mat-text-primary, #333);
+    font-weight: 600;
+    font-size: clamp(16px, 1.5vw, 20px);
 
-    .logo {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        color: #333;
-        font-weight: 600;
-        font-size: clamp(16px, 1.5vw, 20px);
-
-        mat-icon {
-            margin-right: 8px;
-            font-size: 24px;
-            height: 24px;
-            width: 24px;
-        }
+    mat-icon {
+      margin-right: 8px;
+      font-size: 24px;
+      height: 24px;
+      width: 24px;
     }
+  }
 }
 
 // Navigation links
 .nav-links {
+  display: flex;
+  height: 100%;
+  gap: clamp(8px, 1vw, 16px);
+
+  .nav-link {
     display: flex;
+    align-items: center;
     height: 100%;
-    gap: clamp(4px, 1vw, 12px);
+    padding: 0 clamp(12px, 1.5vw, 24px);
+    text-decoration: none;
+    color: var(--mat-text-primary, #333);
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.2s ease;
+    white-space: nowrap;
 
-    .nav-link {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        padding: 0 clamp(8px, 1.5vw, 20px);
-        text-decoration: none;
-        color: #333;
-        font-size: 14px;
-        font-weight: 500;
-        position: relative;
-        transition: color 0.2s ease;
+    &:hover {
+      color: var(--mat-primary, #6200ee);
 
-        &:hover {
-            color: #6200ee;
-
-            &:after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background-color: #6200ee;
-            }
-        }
-    }
-}
-
-// Right side actions
-.actions-container {
-    display: flex;
-    align-items: center;
-    gap: clamp(12px, 2vw, 24px);
-    justify-self: end;
-}
-
-// Search container - Optimal flex integration  
-.search-container {
-    display: flex;
-    align-items: center;
-    width: clamp(250px, 20vw, 400px);
-    height: 40px;
-    justify-self: center; // Center in grid area
-    
-    // Ensure search bar component integration
-    search-bar {
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 100%;
-        height: 100%;
-        display: block; // Let search-bar manage its own layout
+        height: 2px;
+        background-color: var(--mat-primary, #6200ee);
+      }
     }
+  }
+}
+
+
+// Search container - Centered in grid
+.search-container {
+  grid-area: search;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+
+  // Ensure search bar component integration
+  search-bar {
+    width: 100%;
+    max-width: $search-width-desktop;
+    height: 100%;
+    display: block;
+  }
 }
 
 // Action icons
 .action-icon {
-    color: #757575;
+  color: var(--mat-text-secondary, #757575);
 
-    &:hover {
-        color: #6200ee;
-    }
+  &:hover {
+    color: #6200ee;
+  }
 
-    mat-icon {
-        font-size: 20px;
-        height: 20px;
-        width: 20px;
-    }
+  mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
 }
 
 // Avatar
 .avatar-container {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    overflow: hidden;
+  width: $avatar-size;
+  height: $avatar-size;
+  border-radius: 50%;
+  overflow: hidden;
 
-    .avatar-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
-// Tablet breakpoint
-@media (max-width: 768px) {
-    .header-content {
-        grid-template-columns: auto 1fr auto;
-        column-gap: 20px;
-    }
+/* ===== RESPONSIVE LAYOUT SYSTEM (WITH VARIABLES) ===== */
+
+/* Default visibility classes */
+.show-desktop { display: flex; }
+.show-tablet { display: none; }
+.show-mobile { display: none; }
+
+/* Login area - ALWAYS VISIBLE */
+.login-profile-area {
+  display: flex !important;
+  flex-shrink: 0 !important;
+  order: 999 !important;
 }
 
-@media (max-width: 600px) {
-    .header-content {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 16px;
-    }
+/* DESKTOP: Large screens - All elements visible with proper grid */
+@include desktop-up {
+  .header-content {
+    display: grid;
+    grid-template-columns: minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr);
+    grid-template-areas: "logo-nav search actions";
+    column-gap: $header-gap-desktop;
+    padding: 0 $header-padding-desktop;
+  }
+  
+  .logo-nav-section {
+    display: flex !important;
+    grid-area: logo-nav;
+  }
+  
+  .search-container.show-desktop {
+    display: flex !important;
+    grid-area: search;
+  }
+  
+  .actions-container {
+    display: flex !important;
+    gap: $actions-gap-desktop;
+    grid-area: actions;
+  }
+  
+  // Hide mobile-only elements on desktop
+  .show-mobile {
+    display: none !important;
+  }
+  
+  // Show desktop elements
+  .show-desktop {
+    display: flex !important;
+  }
+}
 
-    .logo-container {
-        flex: 0 0 auto; // Don't grow or shrink
-    }
+/* TABLET: Medium screens - Hide heart/mail icons */
+@include tablet-down {
+  .header-content {
+    column-gap: $header-gap-tablet;
+    padding: 0 $header-padding-tablet;
+  }
+  
+  .action-icon.show-desktop {
+    display: none;
+  }
+  
+  .actions-container {
+    gap: $actions-gap-tablet;
+  }
+  
+  .search-container {
+    width: $search-width-tablet;
+  }
+}
 
-    .nav-links {
+/* MOBILE: Small screens - Show icons instead of full elements */
+@include mobile-down {
+  .header-content {
+    // CSS Grid: 3-column layout optimized for mobile
+    display: grid;
+    grid-template-columns: minmax(auto, 1fr) 0fr minmax(auto, 2fr);
+    // grid-template-areas: "logo . actions";
+    gap: $header-gap-mobile;
+    padding: 0 $header-padding-mobile;
+    align-items: center;
+    min-height: $header-height;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .logo-container {
+    // Grid area: logo section
+    grid-area: logo;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  
+  // Hide full search bar on mobile
+  .search-container {
+    display: none !important;
+  }
+  
+  // Hide desktop-only action icons
+  .action-icon.show-desktop {
+    display: none !important;
+  }
+  
+  .actions-container {
+    // Grid area: actions section with mobile elements
+    grid-area: actions;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: $actions-gap-mobile;
+    
+    // Ensure touch-friendly button sizes
+    button {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  // Show mobile elements at 768px
+  .search-icon.show-mobile {
+    display: flex !important;
+    order: 1;
+  }
+  
+  .hamburger-menu.show-mobile {
+    display: flex !important;
+    order: 2;
+  }
+  
+  // Login area styling for mobile
+  .login-profile-area {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    order: 3;
+  }
+}
+
+/* SMALL MOBILE: Very small screens - Replace search bar with search icon */
+@include small-mobile-down {
+  .header-content {
+    gap: $header-gap-small;
+    padding: 0 $header-padding-small;
+    // Reorganize grid for mobile actions
+    grid-template-columns: minmax(auto, 1fr) 0fr minmax(auto, 2fr);
+  }
+  
+  // Hide full search bar completely
+  .search-container {
+    display: none !important;
+  }
+  
+  // Hide desktop-only icons
+  .action-icon.show-desktop {
+    display: none !important;
+  }
+  
+  // Show mobile elements
+  .search-icon.show-mobile {
+    display: flex !important;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .hamburger-menu.show-mobile {
+    display: flex !important;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .actions-container {
+    gap: $actions-gap-small;
+    justify-content: flex-end;
+    
+    // Clear mobile layout: Search Icon | Hamburger | Login
+    .search-icon { order: 1; }
+    .hamburger-menu { order: 2; }  
+    .login-profile-area { order: 3; }
+  }
+}
+
+/* TINY MOBILE: Ultra small screens - Optimized for 320px+ */
+@include tiny-mobile-down {
+  .header-content {
+    gap: 8px;
+    padding: 0 12px;
+    // Adjust grid proportions for tiny screens
+    grid-template-columns: minmax(auto, 0.8fr) 0fr minmax(auto, 1.2fr);
+  }
+  
+  .logo-container {
+    .logo {
+      // Show only icon on very small screens
+      span {
         display: none;
+      }
+      
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
     }
-
-    .search-container {
-        flex: 0 1 auto; // Can shrink but not grow
-        margin: 0 16px; // Equal margin on both sides
-        max-width: 240px;
+  }
+  
+  // Hide search area completely - no space for it
+  .search-container {
+    display: none !important;
+  }
+  
+  .actions-container {
+    gap: 8px;
+    justify-content: flex-end;
+    
+    // Compact button sizes for tiny screens
+    button {
+      min-width: 40px;
+      min-height: 40px;
     }
-
-    .actions-container {
-        flex: 0 0 auto; // Don't grow or shrink
-        display: flex;
-        gap: 12px;
+    
+    // Order: Search Icon | Hamburger | Login
+    .search-icon { order: 1; }
+    .hamburger-menu { order: 2; }
+    .login-profile-area { 
+      order: 3;
+      min-width: 40px;
+      min-height: 40px;
     }
-
-    .search-container .search-text {
-        display: none;
-    }
+  }
 }
 
-// Very small screens
-@media (max-width: 400px) {
-    .header-content {
-        column-gap: 8px; // Even tighter spacing
-        padding: 0 12px; // Smaller padding
-    }
-
-    .search-container {
-        width: auto;
-        padding: 8px;
-        aspect-ratio: 1/1;
-    }
+/* Mobile element styles */
+.search-icon, .hamburger-menu {
+  color: var(--mat-text-secondary, #757575);
+  
+  &:hover {
+    color: var(--mat-primary, #6200ee);
+  }
 }
+
+/* Clean professional appearance - debug CSS removed */
+

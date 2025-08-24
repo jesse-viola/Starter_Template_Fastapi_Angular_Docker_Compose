@@ -3,9 +3,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { RouterLink } from '@angular/router';
 import { SearchBar, SearchSuggestion } from '../search-bar/search-bar';
 import { LoginButton } from '../login-button/login-button';
+import { MobileMenu } from '../mobile-menu/mobile-menu';
+import { MobileSearchSheet } from '../mobile-search/mobile-search';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +21,7 @@ import { LoginButton } from '../login-button/login-button';
     RouterLink,
     SearchBar,
     LoginButton,
+    MobileMenu,
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
@@ -77,6 +81,9 @@ export class Header {
 
   // todo add the auth service
   public isLoggedIn = true;
+  public isMobileMenuOpen = false;
+
+  constructor(private bottomSheet: MatBottomSheet) {}
 
   onSearchChange(searchTerm: string) {
     // console.log('Search changed:', searchTerm);
@@ -103,5 +110,20 @@ export class Header {
   onSuggestionSelected(suggestion: SearchSuggestion) {
     console.log('Suggestion selected:', suggestion);
     // Handle suggestion selection - navigate, filter, etc.
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+  }
+
+  toggleSearch() {
+    this.bottomSheet.open(MobileSearchSheet, {
+      data: { suggestions: this.searchSuggestions },
+      panelClass: 'mobile-search-bottom-sheet'
+    });
   }
 }

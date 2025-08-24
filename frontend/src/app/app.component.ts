@@ -13,6 +13,10 @@ import { Header } from './shared/components/header/header';
     </main>
   `,
   styles: [`
+    main {
+      width: 100%;
+      min-height: 100vh;
+    }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

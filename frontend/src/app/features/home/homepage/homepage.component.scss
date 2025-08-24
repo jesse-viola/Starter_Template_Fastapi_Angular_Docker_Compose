@@ -2,6 +2,12 @@
   min-height: 100vh;
 }
 
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .hero-section {
   background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
   color: white;
@@ -43,7 +49,7 @@
 
 @media (max-width: 768px) {
   .hero-section {
-    padding: 60px 20px;
+    padding: 60px 16px;
     min-height: 300px;
   }
   
